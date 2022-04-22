@@ -1,0 +1,29 @@
+.info-block {
+  &__main-title {
+    @include font(32px, 40px, 500);
+    color: $dark-grey;
+    margin: 0 0 40px;
+  }
+
+  &__title {
+    @include font(24px, 32px, 500);
+    color: $dark-grey;
+    margin: 0;
+  }
+
+  &__subtitle {
+    @include font(18px, 24px, 500);
+    color: $dark-grey;
+    margin: 0;
+  }
+
+  &__desc {
+    @include font(15px, 24px);
+    color: $dark-grey;
+    margin: 16px 0 0;
+
+    &--short {
+      max-width: 612px;
+    }
+  }
+}

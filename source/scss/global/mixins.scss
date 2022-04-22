@@ -1,0 +1,47 @@
+// ШРИФТЫ
+@mixin font-face($name, $filename, $weight, $joinName: $name, $style: normal) {
+  @font-face {
+    font-family: $name;
+    font-weight: $weight;
+    font-style: $style;
+    font-display: swap;
+    src: url("../fonts/" + $filename + ".eot"); /* IE9 Compat Modes */
+    src: local(""),
+      url("../fonts/" + $filename + ".eot?#iefix") format("embedded-opentype"),
+      /* IE6-IE8 */ url("../fonts/" + $filename + ".woff2") format("woff2"),
+      /* Modern Browsers */ url("../fonts/" + $filename + ".woff")
+        format("woff"),
+      /* Modern Browsers */ url("../fonts/" + $filename + ".ttf")
+        format("truetype"),
+      /* Safari, Android, iOS */
+        url("../fonts/" + $filename + ".svg#" + $joinName) format("svg"); /* Legacy iOS */
+  }
+}
+
+//Разрешения
+@mixin mobile {
+  @media (max-width: ($mobile - 1px)) {
+    @content;
+  }
+}
+
+// ШРИФТЫ
+@mixin font($size, $height, $weight: 400) {
+  font-size: $size;
+  line-height: $height;
+  font-weight: $weight;
+}
+
+@mixin btn-reset {
+  margin: 0;
+  padding: 0;
+  height: auto;
+  border: none;
+  background-color: transparent;
+
+  &:hover,
+  &:active,
+  &:focus {
+    background-color: transparent;
+  }
+}

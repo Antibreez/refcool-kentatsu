@@ -1,0 +1,10 @@
+@import "../../node_modules/normalize.css/normalize";
+
+//Global
+@import "global/variables.scss";
+@import "global/mixins.scss";
+@import "global/fonts.scss";
+@import "global/global.scss";
+
+// Blocks
+@import "blocks/*.scss";
