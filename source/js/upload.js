@@ -521,7 +521,6 @@ function readmultifiles(input, files) {
                           const id = newArr.indexOf("Тип");
                           const idAmount = newArr.indexOf("Количество компрессоров");
                           const idPower = newArr.indexOf("Источник питания");
-                          const idLaunchA = newArr.indexOf("Пусковой ток компрессора");
 
                           data.titleBlock.compressor = info[idx + id + 2] + " Компрессор";
 
@@ -549,11 +548,6 @@ function readmultifiles(input, files) {
                           data.electricity.rows.power = {};
                           data.electricity.rows.power.title = "Эл-питание";
                           data.electricity.rows.power.value = power;
-
-                          let launchA = info[idx + idLaunchA + 4];
-                          data.electricity.rows.launchA = {};
-                          data.electricity.rows.launchA.title = "Макс. пусковой ток";
-                          data.electricity.rows.launchA.value = launchA;
                         }
 
                         if (item.includes("Входные данные:")) {
@@ -693,6 +687,30 @@ function readmultifiles(input, files) {
                           data.size.rows.weight.title = "Вес";
                           data.size.rows.weight.value = info[idx + idWeight + 4] + " кг";
                         }
+
+                        if (item.includes("Электрические данные:")) {
+                          const newArr = info.slice(idx);
+                          const idMaxPowerIn = newArr.indexOf("Максимальная потребляемая мощность");
+                          const idLaunchA = newArr.indexOf("Пусковой ток");
+                          const idMaxLaunchA = newArr.indexOf("Максимальный потребляемый ток");
+
+                          data.electricity.rows.maxPowerIn = info[idx + idMaxPowerIn + 2];
+
+                          let launchA = info[idx + idLaunchA + 4];
+                          data.electricity.rows.launchA = {};
+                          data.electricity.rows.launchA.title = "Пусковой ток";
+                          data.electricity.rows.launchA.value = Math.round(+launchA) + " A";
+
+                          let maxPowerIn = info[idx + idMaxPowerIn + 4];
+                          data.electricity.rows.maxPowerIn = {};
+                          data.electricity.rows.maxPowerIn.title = "Макс. потреб. мощность";
+                          data.electricity.rows.maxPowerIn.value = Math.round(maxPowerIn) + " кВт";
+
+                          let maxLaunchA = info[idx + idMaxLaunchA + 4];
+                          data.electricity.rows.maxLaunchA = {};
+                          data.electricity.rows.maxLaunchA.title = "Макс. потреб. ток";
+                          data.electricity.rows.maxLaunchA.value = Math.round(maxLaunchA) + " A";
+                        }
                       });
 
                       const table = {
@@ -796,7 +814,11 @@ function readmultifiles(input, files) {
                         startY: finalY,
                         theme: "plain",
                         head: table.getHead(data.electricity.title),
-                        body: [makeRow(data.electricity.rows.power, data.electricity.rows.launchA, true, false)],
+                        body: [
+                          makeRow(data.electricity.rows.power, data.electricity.rows.maxPowerIn, true, false),
+                          makeRow("", data.electricity.rows.maxLaunchA),
+                          makeRow("", data.electricity.rows.launchA, false, true),
+                        ],
                         didDrawCell: table.makeLine(false),
                       });
 
